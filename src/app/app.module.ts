@@ -7,11 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { OverviewComponent } from './overview/overview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OverviewComponent
+    OverviewComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
