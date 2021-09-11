@@ -13,8 +13,7 @@ import { HttpError } from './models/http-error';
 })
 export class HttpService {
 
-  //private readonly baseUrl = 'https://www.wouterh.be/sympl/api/'
-  private readonly baseUrl = 'http://127.0.0.1:8000/'
+  private readonly baseUrl = 'https://www.wouterh.be/sympl/api/'
 
   constructor(private http: HttpClient) { }
 
