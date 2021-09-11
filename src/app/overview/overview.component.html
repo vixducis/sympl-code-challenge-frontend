@@ -1,0 +1,75 @@
+<div *ngIf="errorMessage !== null" [@slideInOut] class="rounded-md bg-red-100 text-red-700 p-4 notification"
+    role="alert">
+    <p>{{errorMessage}}</p>
+</div>
+
+<div class="max-w-xl mx-auto">
+    <div>
+        <div class="text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 48 48"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M34 40h10v-4a6 6 0 00-10.712-3.714M34 40H14m20 0v-4a9.971 9.971 0 00-.712-3.714M14 40H4v-4a6 6 0 0110.713-3.714M14 40v-4c0-1.313.253-2.566.713-3.714m0 0A10.003 10.003 0 0124 26c4.21 0 7.813 2.602 9.288 6.286M30 14a6 6 0 11-12 0 6 6 0 0112 0zm12 6a4 4 0 11-8 0 4 4 0 018 0zm-28 0a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <h2 class="mt-2 text-lg font-medium text-gray-900">Add projects to team members</h2>
+        </div>
+        <form [formGroup]="assignmentForm" (ngSubmit)="submit()" class="mt-6 flex">
+            <label for="mail" class="sr-only">Email address</label>
+            <input type="text" name="mail" id="mail" formControlName="mail"
+                class="py-2 px-3 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                placeholder="Enter an email" />
+            <select id="project" name="project" formControlName="project"
+                class="ml-1 shadow-sm block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option *ngFor="let project of projects; let i = index" [selected]="i == 1" [value]="project.id">
+                    {{project.name}}</option>
+            </select>
+            <button type="submit" [ngClass]="{loading: processingForm}"
+                class="ml-4 flex-shrink-0 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 formsubmit">
+                Link
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+            </button>
+        </form>
+    </div>
+    <div class="mt-10">
+        <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Team members + projects</h3>
+        <ul role="list" class="mt-4 border-t border-b border-gray-200 divide-y divide-gray-200">
+            <li class="py-4 flex items-center justify-between space-x-3" *ngFor="let user of users">
+                <div class="min-w-0 flex-1 flex items-center space-x-3">
+                    <div class="flex-shrink-0">
+                        <img class="h-10 w-10 rounded-full" src="{{user.image}}" alt="" title="{{user.mail}}" />
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-medium text-gray-900 truncate">{{user.name}}</p>
+                        <p class="text-sm font-medium text-gray-500 truncate">{{user.role}}</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <span *ngFor="let projectid of user.projects"
+                            class="mr-1 inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-{{getProjectWithId(projectid)?.color}}-100 text-{{getProjectWithId(projectid)?.color}}-800 project">
+                            {{getProjectWithId(projectid)?.name}}
+                            &nbsp;
+                            <svg (click)="removeAssignment(user.id, projectid, $event)" xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 remove" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            <svg class="animate-spin h-4 w-4 currentColor loading" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

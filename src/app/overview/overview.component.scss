@@ -1,0 +1,53 @@
+.notification {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+select {
+    -webkit-appearance:none;
+}
+
+.project {
+    .remove {
+        display: block;
+    }
+
+    .loading {
+        display: none;
+    }
+
+    &.loading {
+        .remove {
+            display: none;
+        }
+    
+        .loading {
+            display: block;
+        }
+    }
+}
+
+.formsubmit {
+    position: relative;
+
+    svg {
+        display: none;
+        position: absolute;
+        top: 0;
+        z-index: 100;
+        width: 20px;
+        height: 20px;
+        left: 50%;
+        top: 50%;
+        margin: -10px 0 0 -10px;
+    }
+
+    &.loading {
+        color: transparent;
+
+        svg {
+            display: block;
+        }
+    }
+}
