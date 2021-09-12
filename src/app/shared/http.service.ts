@@ -5,7 +5,6 @@ import { User, UserJson } from './models/user';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Project, ProjectJson } from './models/project';
-import { Assignment, AssignmentJson } from './models/assignment';
 import { HttpError } from './models/http-error';
 
 @Injectable({
@@ -13,7 +12,8 @@ import { HttpError } from './models/http-error';
 })
 export class HttpService {
 
-  private readonly baseUrl = 'https://www.wouterh.be/sympl/api/'
+  private readonly baseUrl = 'http://127.0.0.1:8000/';
+  //private readonly baseUrl = 'https://www.wouterh.be/sympl/api/'
 
   constructor(private http: HttpClient) { }
 
@@ -89,16 +89,16 @@ export class HttpService {
    * @param projectid 
    * @returns 
    */
-  public createAssignment(userId: number, projectId: number): Observable<Assignment|HttpError> {
-    return this.http.post<HttpResponse<AssignmentJson>>(
+  public createAssignment(userId: number, projectId: number): Observable<null|HttpError> {
+    return this.http.post<HttpResponse<any>>(
       this.baseUrl + 'users/' + userId + '/project/' + projectId,
       {
         responseType: 'json',
         observe: 'body'
       }
     ).pipe(
-      map(response => {
-        return Assignment.fromJson(response.data);
+      map(() => {
+        return null;
       }),
       catchError((err: HttpErrorResponse) => {
         return of(new HttpError(
