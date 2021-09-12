@@ -4,7 +4,13 @@ module.exports = {
         enabled: true,
         content: [
             './src/**/*.{html,ts}',
-        ]
+        ],
+        options: {
+            safelist: [
+              /^bg-.*-100$/,
+              /^text-.*-800$/
+            ]
+        }
     },
     darkMode: 'media', // or 'media' or 'class'
     theme: {
